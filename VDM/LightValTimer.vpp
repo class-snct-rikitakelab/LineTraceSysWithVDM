@@ -1,0 +1,38 @@
+class LightValTimer
+
+
+instance variables
+  private cycle : int;
+  private timer : TimerTask;
+
+operations
+
+public run : () ==> ()
+run() ==
+ (while true do 
+  (timer.run();
+  --new IO().echo("hoge");
+  )
+);
+
+public LightValTimer : int*TimerTask ==> LightValTimer
+LightValTimer(time,timerTask) ==
+ (LightValTimer`cycle := time;
+ timer := timerTask;
+);
+
+public stopLightValTimer : () ==> ()
+stopLightValTimer() ==
+ (skip
+);
+
+public startLightValTimer : TimerTask ==> ()
+startLightValTimer(task) ==
+ (LightValTimer`timer := task
+);
+
+thread
+run();
+
+
+end LightValTimer

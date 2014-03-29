@@ -1,0 +1,28 @@
+/**
+  Timer.
+
+  <p>
+  description
+  </p>
+
+  @version
+  @author
+*/
+
+class Timer
+
+types
+
+values
+
+instance variables
+
+operations
+
+-- constructor for Timer
+public Timer: () ==> Timer
+Timer() == ();
+
+functions
+
+end Timer

@@ -1,0 +1,40 @@
+class TestCase
+  is subclass of Test
+
+instance variables
+  name : seq of char
+
+operations
+  public TestCase: seq of char ==> TestCase
+  TestCase(nm) == name := nm;
+
+  public GetName: () ==> seq of char
+  GetName () == return name;
+
+  protected assertTrue: bool ==> ()
+  assertTrue (pb) == if not pb then exit <FAILURE>;
+
+  protected assertFalse: bool ==> ()
+  assertFalse (pb) == if pb then exit <FAILURE>;
+
+  public Run: TestResult ==> ()
+  Run (ptr) ==
+    trap <FAILURE>
+      with 
+        ptr.AddFailure(self)
+      in
+        (setUp();
+	 RunTest();
+	 tearDown());
+
+  public setUp: () ==> ()
+  setUp () == is subclass responsibility;
+
+  protected RunTest: () ==> ()
+  RunTest () == is subclass responsibility;
+
+  public tearDown: () ==> ()
+  tearDown () == is subclass responsibility
+
+end TestCase
+

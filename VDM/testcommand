@@ -1,0 +1,9 @@
+
+vppde -p -R LV.tc  LightValCtrlTest.vpp LightValCtrl.vpp LightValEncoder.vpp LightVal.vpp WheelMotor.vpp PIDLightValCtrl.vpp PIDLightValCtrlParm.vpp VDMUnit.vpp TargetLightValueControlTest.vpp
+
+
+vppde -iDIPQ -R LV.tc -O all.res all.arg LightValCtrlTest.vpp LightValCtrl.vpp LightValEncoder.vpp LightVal.vpp WheelMotor.vpp PIDLightValCtrl.vpp PIDLightValCtrlParm.vpp VDMUnit.vpp TargetLightValueControlTest.vpp
+
+
+
+

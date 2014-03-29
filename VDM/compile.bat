@@ -1,0 +1,3 @@
+vppde -p -R LV.tc  LightValCtrlTest.vpp LightValCtrl.vpp LightValEncoder.vpp LightVal.vpp WheelMotor.vpp PIDLightValCtrl.vpp PIDLVCParm.vpp LightValRange.vpp LightValListener.vpp Listener.vpp TargetLightValueControlTest.vpp Test.vpp TestCase.vpp TestSuite.vpp TestResult.vpp io.vpp WheelMotorStub.vpp LightValEncoderStub.vpp TimerTask.vpp LightValTimer.vpp
+
+vppde -iDIPQ -R LV.tc -O all.res all.arg LightValCtrlTest.vpp LightValCtrl.vpp LightValEncoder.vpp LightVal.vpp WheelMotor.vpp PIDLightValCtrl.vpp PIDLVCParm.vpp LightValRange.vpp LightValListener.vpp Listener.vpp TargetLightValueControlTest.vpp Test.vpp TestCase.vpp TestSuite.vpp TestResult.vpp io.vpp WheelMotorStub.vpp LightValEncoderStub.vpp TimerTask.vpp LightValTimer.vpp

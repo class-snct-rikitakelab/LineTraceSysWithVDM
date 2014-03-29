@@ -1,0 +1,8 @@
+class TimerTask 
+
+operations
+public run : () ==> ()
+run() ==
+ is subclass responsibility;
+
+end TimerTask

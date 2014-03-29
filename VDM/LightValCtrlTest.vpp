@@ -1,0 +1,130 @@
+class LightValCtrlTest is subclass of TestCase
+
+
+instance variables
+	lightValEncoder : LightValEncoderStub;
+	wheelMotor : WheelMotorStub;
+	ControlMethod : PIDLightValCtrl;
+	pidParm : PIDLVCParm;
+	tc: LightValCtrl;
+	lt : LightValTimer;
+	lightValListner: LightValListener;
+
+operations
+	public setUp: () ==> ()
+	setUp() ==
+	(
+		lightValEncoder := new LightValEncoderStub();
+		wheelMotor := new WheelMotorStub();
+		ControlMethod := new PIDLightValCtrl();
+		pidParm := new PIDLVCParm(1.0,0,0);
+		ControlMethod.setCtrlParm(pidParm);
+		tc := new LightValCtrl(lightValEncoder,wheelMotor,ControlMethod);
+		tc.setTargLightVal(500);
+		 lt  := new LightValTimer(4,tc);
+		 lightValListner := new LightValListener();	
+		 tc.setLightValListener(lightValListner);
+		
+	);
+
+	protected RunTest:() ==> ()
+	RunTest() ==
+	(
+		setUp();test01();
+		setUp();test02();setUp();test03();setUp();setUp();test04();setUp();setUp();test05();test06();
+		test07();setUp();test08();
+	);
+
+	--startUpTest
+	public test01:() ==> ()
+	test01() ==
+	(
+		tc.startCtrl();
+		assertTrue(tc.ctrlState = true);
+	);
+
+	--test02
+	public test02:() ==> ()
+	test02() ==
+	(
+
+		tc.startCtrl();
+		tc.run();
+		--assertTrue(wheelMotor.getRotate() = -500);
+	);
+
+	--stopControlTest
+	public test03:() ==> ()
+	test03() ==
+	(
+		tc.startCtrl();
+		assertTrue(tc.ctrlState = true);
+		tc.stopCtrl();
+		assertTrue(tc.ctrlState = false);
+		assertTrue(wheelMotor.getRotate() = 0);	
+	);
+
+	--changeTargetValueTest
+	public test04:() ==> ()
+	test04() == 
+	(
+		tc.startCtrl();
+		tc.setTargLightVal(500);
+		tc.run();
+		assertTrue(tc.ctrlState = true);
+		tc.setTargLightVal(100);
+		assertTrue(tc.getTargLightVal() = 100);
+	);
+
+	--threadTest
+	public test05:() ==> ()
+	test05() ==
+	(
+		
+		tc.startCtrl();
+		start(lt);
+		tc.run();
+		--new IO().echo(wheelMotor.getRotate());
+		assertTrue(wheelMotor.getRotate() = -500);
+
+	);
+
+	--非制御中のときにrunしてもモータが回転しないことを確認
+	public test06:() ==> ()
+	test06() ==
+	(
+		tc.stopCtrl();
+		tc.run();
+		assertTrue(wheelMotor.getRotate() = 0);
+	);
+
+	--範囲外を計測した際にリスナーに通知が入ってるかチェック
+	public test07:() ==> ()
+	test07() ==
+	(
+		lightValEncoder.setLightVal(1024);
+		tc.startCtrl();
+		tc.run();
+		assertTrue(lightValListner.getState() = true);
+	);
+	--範囲内を計測した際にリスナーに通知が行っていないことをチェック
+	public test08:() ==> ()
+	test08() ==
+	(
+		lightValEncoder.setLightVal(1023);
+		tc.startCtrl();
+		tc.run();
+		assertTrue(lightValListner.getState() = false);
+	);
+
+
+  public tearDown: () ==> ()
+  tearDown () == 
+  (
+  skip;
+  );
+
+  values
+  JCGControl_imports = { "junit.framework.TestCase" };
+
+end LightValCtrlTest
